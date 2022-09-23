@@ -17,7 +17,7 @@ pipeline {
                 junit 'target/surefire-repport/*.xml'
                 jacoco execPattern: 'target/jacoco.exec' 
               }
-              
             }
   }
+}
 }
