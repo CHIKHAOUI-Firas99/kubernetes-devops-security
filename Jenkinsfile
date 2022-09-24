@@ -8,6 +8,8 @@ pipeline {
               archive 'target/*.jar' //so that they can be downloaded later
             }
   }
+
+  
           stage('unit test - Junit and jacoco') {
             steps {
               sh "mvn test"
@@ -19,6 +21,8 @@ pipeline {
               }
             }
           }
+
+
           stage('Docker buid and push'){
             steps{
               withDockerRegistry([credentialsId:"docker-hub", url: ""]){
@@ -27,6 +31,17 @@ pipeline {
               sh 'docker push firaschikhaoui/numeric-app:""$GIT_COMMIT""'
              }
            }
+          }
+
+
+          stage('Kubernetes deployment'){
+            steps{
+            withKubeConfig([credentialsId: 'kubeconfig']){
+              sh "sed -i 's#replace#firaschikhaoui/numeric-app:${GIT_COMMIT}#g' k8s_deployment_service.yaml"
+              sh "kubectl apply -f k8s_deployment_service.yaml"
+            }
+            }
+
           }  
         }
 }

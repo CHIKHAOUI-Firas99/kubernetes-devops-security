@@ -20,6 +20,14 @@ public class NumericController {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	private static final String baseURL = "http://node-service:5000/plusone";
 	
+	/*
+	root@devsecops-cloud:/home/devsecops$ kubectl -n default create deploy node-app --image siddharth67/node-service:v1
+	deployment.apps/node-app created
+
+	root@devsecops-cloud:/home/devsecops$ kubectl -n default expose deploy node-app --name node-service --port 5000
+	service/node-service exposed
+	*/
+	
 	RestTemplate restTemplate = new RestTemplate();
 	
 	@RestController
