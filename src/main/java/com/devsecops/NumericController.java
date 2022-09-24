@@ -34,9 +34,11 @@ public class NumericController {
 	public class compare {
 
 		@GetMapping("/")
-		public String welcome() {
-			return "Tora7 lidouuu be sfehaaa";
-		}
+		public @ResponseBody byte[] getImage() throws IOException {
+    InputStream in = getClass()
+      .getResourceAsStream("/src/player.jpg");
+    return IOUtils.toByteArray(in);
+}
 
 		@GetMapping("/compare/{value}")
 		public String compareToFifty(@PathVariable int value) {
